@@ -1,1 +1,20 @@
-@import url('./reset.css')
+@import url('./reset.css');
+body {
+  display: flex;
+  justify-content: center;
+}
+span.title {
+  display: block;
+}
+.container {
+  width: 70%;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+input {
+  margin-bottom: 1.2rem;
+}
