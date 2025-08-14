@@ -1,20 +1,76 @@
 @import url('./reset.css');
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --input-height: 2rem;
+  --title-height: 1rem;
+}
 body {
   display: flex;
   justify-content: center;
-}
-span.title {
-  display: block;
+  background-color: #fafafa;
+  height: 100vh;
+  align-items: center;
 }
 .container {
-  width: 70%;
+  border-radius: 15px;
+  background-color: #ffffff;
+  border: 1px solid #777777;
+  max-width: 430px;
+  flex: 1;
+  padding: 1.5em;
 }
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  align-items: flex-start;
+.container * {
+  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+h2 {
+  font-size: 1.4rem;
+  margin: 0.7em 0;
+}
+/* form { */
+/*   width: 100%; */
+/*   display: flex; */
+/*   flex-direction: column; */
+/* } */
+label,
+.seldiv {
+  display: block;
+  min-height: calc(var(--input-height) + var(--title-height) + 2rem);
+}
+label * {
+  width: 100%;
+  display: block;
+}
+
+span.title {
+  display: block;
+  display: block;
+  margin: 0.2em;
+  height: var(--title-height);
+}
+span[class*='error'].show {
+  display: block;
+  background-color: red;
+  border-radius: 0 0 4px 4px;
+  color: white;
+  padding: 0.3em;
+  z-index: 2;
+  font-weight: 900;
+}
+span[class*='error'] {
+  display: none;
 }
 input {
-  margin-bottom: 1.2rem;
+  height: var(--input-height);
+}
+input.valid {
+  box-shadow: 0px 0px 2px 2px green;
+}
+input.valid:focus {
+  outline: none;
+}
+input.invalid {
+  box-shadow: 0px 0px 2px 2px red;
 }

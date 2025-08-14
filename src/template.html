@@ -7,43 +7,39 @@
   </head>
   <body>
     <div class="container">
+      <h2>Your information</h2>
       <form novalidate>
-        <p>
-          <label for="mail">
-            <span class="title">Please enter an email address:</span>
-            <input type="email" id="mail" name="mail" required minlength="4" />
-            <span class="error" aria-live="polite"></span>
-          </label>
-        </p>
-        <span class="title">Country:</span>
-        <select id="country">
-          <option value="">--Select--</option>
-          <option value="ca">Canada</option>
-          <option value="us">United States</option>
-          <option value="de">United States</option>
-        </select>
-        <p>
-          <label for="postal">
-            <span class="title">Please enter an postal code:</span>
-            <input id="postal" name="postal" required />
-            <span class="postal-warning" aria-live="polite"></span>
-          </label>
-        </p>
-        <p>
-          <label for="password">
-            <span class="title">Set a password:</span>
-            <input type="password" id="password" required minlength="8" />
-            <span class="password-warning" aria-live="polite"></span>
-          </label>
-        </p>
-        <p>
-          <label for="confirm">
-            <span class="title">Confirm password:</span>
-            <input type="password" id="confirm" required minlength="8" />
-            <span class="confirm-warning" aria-live="polite"></span>
-          </label>
-        </p>
-        <button>submit</button>
+        <label for="mail">
+          <span class="title">Email</span>
+          <input type="email" id="mail" name="mail" required minlength="4" />
+          <span class="email-error" aria-live="polite"></span>
+        </label>
+        <div class="seldiv">
+          <span class="title">Country:</span>
+          <select id="country">
+            <option value="" selected>--Select--</option>
+            <option value="ca">Canada</option>
+            <option value="us">United States</option>
+            <option value="de">Germany</option>
+          </select>
+          <span class="country-error" aria-live="polite"></span>
+        </div>
+        <label for="postal">
+          <span class="title">Postal code</span>
+          <input id="postal" name="postal" required />
+          <span class="postal-error" aria-live="polite"></span>
+        </label>
+        <label for="password">
+          <span class="title">Set password</span>
+          <input type="password" id="password" required minlength="8" />
+          <span class="password-error" aria-live="polite"></span>
+        </label>
+        <label for="confirm">
+          <span class="title">Confirm password</span>
+          <input type="password" id="confirm" required minlength="8" />
+          <span class="confirm-error" aria-live="polite"></span>
+        </label>
+        <button type="submit">submit</button>
       </form>
     </div>
   </body>
