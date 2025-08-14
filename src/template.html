@@ -31,7 +31,12 @@
         </label>
         <label for="password">
           <span class="title">Set password</span>
-          <input type="password" id="password" required minlength="8" />
+          <input
+            type="password"
+            id="password"
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          />
           <span class="password-error" aria-live="polite"></span>
         </label>
         <label for="confirm">

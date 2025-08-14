@@ -7,52 +7,26 @@ const passwd = document.querySelector('#password');
 const confirm = document.querySelector('#confirm');
 const submitBtn = document.querySelector('button[type="submit"]');
 //
-const isValidEmail = () => {
-  return email.validity.valid;
-};
-const countrySelected = () => {
-  return country.value;
-};
-const isPasswdMatch = () => {
-  return passwd.value === confirm.value;
-};
-const isValidPasswd = () => {
-  const result =
-    passwd.value.match(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-]).{8,}$/,
-    ) && !passwd.value.includes(' ');
-  // passwd.validity.valid;
-  return result;
-};
-const isInvalidPostal = () => {
+const isValidEmail = () => email.validity.valid;
+const countrySelected = () => country.value;
+const isPasswdMatch = () => passwd.value === confirm.value;
+const isValidPasswd = () =>
+  !passwd.value.includes(' ') && passwd.validity.valid;
+//
+const isValidPostal = () => {
   const selectedCountry = countrySelected();
   const v = postal.value;
   switch (selectedCountry) {
-    case 'us': {
-      return !v.match(/\D/g) && v.length === 6
-        ? false
-        : 'Invalid input, example: 201291';
-    }
-    case 'de': {
-      return !v.match(/\D/g) && v.length === 5
-        ? false
-        : 'Invalid input, example: 21291';
-    }
-    case 'ca': {
-      postal.value = postal.value.toUpperCase();
-      return v.match(/^[abceghjklmnprstvwxyz]\d[a-z]\s*?\d[a-z]\d$/gi)
-        ? false
-        : 'Invalid input, example: T7T 9X1';
-    }
-    default: {
-      return 'Please select a country first';
-    }
+    case 'us':
+      return !v.match(/\D/g) && v.length === 6;
+    case 'de':
+      return !v.match(/\D/g) && v.length === 5;
+    case 'ca':
+      return v.match(/^[abceghj-nprstv-z]\d[a-z]\s*?\d[a-z]\d$/gi);
+    default:
+      return false;
   }
 };
-//
-//
-//
-//
 //
 //
 //helper
@@ -72,11 +46,6 @@ const getErrorSpan = target => {
   return target.parentElement.querySelector('span[class*="error"]');
 };
 //
-//
-//
-//
-//
-//
 const update = (inputEl, callback, msg) => {
   const span = getErrorSpan(inputEl);
   const goodResult = callback();
@@ -85,7 +54,7 @@ const update = (inputEl, callback, msg) => {
     return true;
   }
   displayError(inputEl, span, msg);
-  return null;
+  return false;
 };
 //
 //
@@ -94,22 +63,29 @@ const update = (inputEl, callback, msg) => {
 //
 //postal
 const updatePostalError = () => {
-  const span = getErrorSpan(postal);
-  const msg = isInvalidPostal();
-  if (msg) {
-    span.textContent = msg;
-    span.classList.add('show');
-    return null;
-  } else {
-    hideError(postal, span);
-    return true;
+  const selectedCountry = countrySelected();
+  let msg;
+  switch (selectedCountry) {
+    case 'us':
+      msg = 'Invalid input, example: 201291';
+      break;
+    case 'de':
+      msg = 'Invalid input, example: 33232';
+      break;
+    case 'ca':
+      msg = 'Invalid input, example: T8T 9R2';
+      break;
+    default:
+      msg = 'Please select a country first';
   }
+  return update(postal, isValidPostal, msg);
 };
 //
 const updateEmailError = () => {
   return update(email, isValidEmail, 'Please enter a correct email address');
 };
 const updatePasswdError = () => {
+  console.log(passwd.validity.valid);
   const msg =
     'At least one uppercase letter, one lowercase letter, one digit, one special character, and is at least 8 characters long';
   return update(passwd, isValidPasswd, msg);
@@ -129,7 +105,7 @@ const submitting = e => {
   }
 };
 email.addEventListener('input', updateEmailError);
-passwd.addEventListener('input', e => {
+passwd.addEventListener('input', () => {
   updatePasswdError();
   updateConfirmError();
 });
@@ -140,10 +116,8 @@ confirm.addEventListener('input', () => {
   updateConfirmError();
 });
 submitBtn.addEventListener('click', submitting);
-form.querySelectorAll('input').forEach(v => {
-  v.addEventListener('keydown', e => {
-    if (e.key === 'Enter') submitting(e);
-  });
+form.addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitting(e);
 });
 country.addEventListener('change', updatePostalError);
 form.addEventListener('focusout', e => {
